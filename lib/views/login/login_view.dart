@@ -1,60 +1,22 @@
+import 'package:dsw53518/utils/my_colors.dart';
 import 'package:dsw53518/utils/my_images.dart';
+import 'package:dsw53518/views/widgets/basic_form_field.dart';
+import 'package:dsw53518/views/widgets/main_button.dart';
+import 'package:dsw53518/views/widgets/main_title.dart';
+import 'package:dsw53518/views/widgets/sign_prompt.dart';
+import 'package:dsw53518/views/widgets/social_media_box.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/my_colors.dart';
-import '../register/register_view.dart';
-
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
-  static const double _verticalPadding = 26.0;
-  static const double _inputBorderRadius = 15.0;
-  static const EdgeInsets _iconPadding = EdgeInsets.only(
-    left: 11,
-    top: 14,
-    bottom: 14,
-    right: 24,
-  );
+  static const double _verticalPadding = 25;
 
-  Widget _buildTextField({
-    required String labelText,
-    required String iconPath,
-    bool obscureText = false,
-  }) {
-    return TextFormField(
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_inputBorderRadius),
-          borderSide: BorderSide(
-            color: MyColors.purpleColor,
-            width: 2,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_inputBorderRadius),
-          borderSide: BorderSide(
-            color: MyColors.purpleColor,
-            width: 2.0,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_inputBorderRadius),
-          borderSide: BorderSide(
-            color: MyColors.purpleColor,
-            width: 2.0,
-          ),
-        ),
-        labelText: labelText,
-        labelStyle: TextStyle(color: MyColors.transparentBlack),
-        prefixIcon: Padding(
-          padding: _iconPadding,
-          child: Image.asset(iconPath),
-        ),
-      ),
-    );
-  }
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
 
+class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,77 +26,76 @@ class LoginView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 40),
           width: double.infinity,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
               Image.asset(MyImages.logo),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Sign in',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    color: MyColors.darkPurpleColor,
-                  ),
-                ),
+                child: MainTitle(title: 'Sign in'),
               ),
-              const SizedBox(height: _verticalPadding),
-              _buildTextField(
+              const SizedBox(height: LoginView._verticalPadding),
+              const BasicFormField(
                 labelText: 'Email or User Name',
                 iconPath: MyImages.person,
               ),
-              const SizedBox(height: _verticalPadding),
-              _buildTextField(
+              const SizedBox(height: LoginView._verticalPadding),
+              const BasicFormField(
                 labelText: 'Password',
                 iconPath: MyImages.locker,
                 obscureText: true,
               ),
-              const SizedBox(height: _verticalPadding),
+              const SizedBox(height: LoginView._verticalPadding),
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
-                  onTap: () => print('Forgot Password clicked'),
+                  onTap: () => debugPrint('Forgot Password clicked'),
                   child: Text(
                     'Forget Password ?',
                     style: TextStyle(
                       color: MyColors.darkPurpleColor,
-                      fontSize: 15.0,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: _verticalPadding),
+              const SizedBox(height: LoginView._verticalPadding),
               SizedBox(
                 width: double.infinity,
                 height: 50,
-                child: FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: MyColors.lightPurpleColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(_inputBorderRadius),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterView(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Sign In', // Corrected the typo
-                    style: TextStyle(
-                      color: MyColors.whiteColor,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                child: MainButton(
+                  onPressed: () {},
+                  buttonText: 'Sign In',
                 ),
               ),
-              const SizedBox(height: _verticalPadding),
+              const SizedBox(
+                height: 60,
+              ),
+              Text(
+                'Or Sign in with',
+                style: TextStyle(
+                  color: MyColors.darkPurpleColor,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: LoginView._verticalPadding),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(width: 24),
+                  SocialMediaBox(imagePath: MyImages.google),
+                  SizedBox(width: 24),
+                  SocialMediaBox(imagePath: MyImages.facebook),
+                  SizedBox(width: 24),
+                  SocialMediaBox(imagePath: MyImages.x),
+                  SizedBox(width: 24),
+                  SocialMediaBox(imagePath: MyImages.linkedin),
+                ],
+              ),
+              const SizedBox(height: 60),
+              const SignPrompt(
+                promptText: "Don't have an account?",
+                buttonText: 'Sign Up',
+              ),
             ],
           ),
         ),
