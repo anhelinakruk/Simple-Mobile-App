@@ -1,14 +1,15 @@
 import 'package:dsw53518/utils/my_colors.dart';
-import 'package:dsw53518/views/register/register_view.dart';
 import 'package:flutter/material.dart';
 
 class SignPrompt extends StatelessWidget {
   final String promptText;
   final String buttonText;
+  final VoidCallback onPressed;
 
   const SignPrompt({
     required this.promptText,
     required this.buttonText,
+    required this.onPressed,
     super.key,
   });
 
@@ -27,14 +28,7 @@ class SignPrompt extends StatelessWidget {
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
           ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => const RegisterView(),
-              ),
-            );
-          },
+          onPressed: onPressed,
           child: Text(
             buttonText,
             style: TextStyle(

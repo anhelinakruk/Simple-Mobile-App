@@ -1,5 +1,6 @@
 import 'package:dsw53518/utils/my_colors.dart';
 import 'package:dsw53518/utils/my_images.dart';
+import 'package:dsw53518/views/register/register_view.dart';
 import 'package:dsw53518/views/widgets/basic_form_field.dart';
 import 'package:dsw53518/views/widgets/main_button.dart';
 import 'package:dsw53518/views/widgets/main_title.dart';
@@ -92,7 +93,29 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
               const SizedBox(height: 60),
-              const SignPrompt(
+              SignPrompt(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder<LoginView>(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const RegisterView(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1, 0);
+                        const end = Offset.zero;
+                        const curve = Curves.ease;
+                        final tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        final offsetAnimation = animation.drive(tween);
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
+                },
                 promptText: "Don't have an account?",
                 buttonText: 'Sign Up',
               ),
