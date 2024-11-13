@@ -9,4 +9,5 @@ class MyImages {
   static const linkedin = '$_assetsFolder/linkedin.png';
   static const circles = '$_assetsFolder/circles.png';
   static const arrowBack = '$_assetsFolder/arrow_back.png';
+  static const mail = '$_assetsFolder/mail.png';
 }
