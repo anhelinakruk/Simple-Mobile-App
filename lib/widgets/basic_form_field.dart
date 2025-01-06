@@ -16,17 +16,20 @@ class BasicFormField extends StatelessWidget {
     this.validator,
     this.obscureText = false,
     super.key,
+    this.controller,
   });
 
   final String? Function(String?)? validator;
   final String labelText;
   final String iconPath;
   final bool obscureText;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obscureText,
       validator: validator,
+      controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_inputBorderRadius),

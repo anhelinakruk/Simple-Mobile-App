@@ -1,12 +1,14 @@
 import 'package:dsw53518/utils/my_colors.dart';
 import 'package:dsw53518/utils/my_images.dart';
+import 'package:dsw53518/views/home/home_view.dart';
 import 'package:dsw53518/views/register/register_view.dart';
-import 'package:dsw53518/views/widgets/basic_form_field.dart';
-import 'package:dsw53518/views/widgets/main_button.dart';
-import 'package:dsw53518/views/widgets/main_title.dart';
-import 'package:dsw53518/views/widgets/sign_prompt.dart';
-import 'package:dsw53518/views/widgets/social_media_box.dart';
+import 'package:dsw53518/widgets/basic_form_field.dart';
+import 'package:dsw53518/widgets/main_button.dart';
+import 'package:dsw53518/widgets/main_title.dart';
+import 'package:dsw53518/widgets/sign_prompt.dart';
+import 'package:dsw53518/widgets/social_media_box.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -18,11 +20,37 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final savedEmail = prefs.getString('email') ?? '';
+    final savedPassword = prefs.getString('password') ?? '';
+
+    if (email == savedEmail && password == savedPassword) {
+      await prefs.setBool('isLogged', true);
+
+      await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute<void>(builder: (context) => const HomeView()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid credentials')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.whiteColor,
-      body: Center(
+      body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 40),
           width: double.infinity,
@@ -35,15 +63,17 @@ class _LoginViewState extends State<LoginView> {
                 child: MainTitle(title: 'Sign in'),
               ),
               const SizedBox(height: LoginView._verticalPadding),
-              const BasicFormField(
+              BasicFormField(
                 labelText: 'Email or User Name',
                 iconPath: MyImages.person,
+                controller: _emailController,
               ),
               const SizedBox(height: LoginView._verticalPadding),
-              const BasicFormField(
+              BasicFormField(
                 labelText: 'Password',
                 iconPath: MyImages.locker,
                 obscureText: true,
+                controller: _passwordController,
               ),
               const SizedBox(height: LoginView._verticalPadding),
               Align(
@@ -64,7 +94,7 @@ class _LoginViewState extends State<LoginView> {
                 width: double.infinity,
                 height: 50,
                 child: MainButton(
-                  onPressed: () {},
+                  onPressed: _login,
                   buttonText: 'Sign In',
                 ),
               ),
