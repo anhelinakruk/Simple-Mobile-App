@@ -1,14 +1,51 @@
 import 'package:dsw53518/utils/my_colors.dart';
 import 'package:dsw53518/utils/my_images.dart';
 import 'package:dsw53518/views/login/login_view.dart';
-import 'package:dsw53518/views/widgets/basic_form_field.dart';
-import 'package:dsw53518/views/widgets/main_button.dart';
-import 'package:dsw53518/views/widgets/main_title.dart';
-import 'package:dsw53518/views/widgets/sign_prompt.dart';
+import 'package:dsw53518/widgets/basic_form_field.dart';
+import 'package:dsw53518/widgets/main_button.dart';
+import 'package:dsw53518/widgets/main_title.dart';
+import 'package:dsw53518/widgets/sign_prompt.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
+
+  @override
+  State<RegisterView> createState() => RegisterViewState();
+}
+
+class RegisterViewState extends State<RegisterView> {
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  Future<void> _register() async {
+    final fullName = _fullNameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('fullName', fullName);
+    await prefs.setString('email', email);
+    await prefs.setString('password', password);
+    await prefs.setBool('isLogged', true);
+
+    await Navigator.pushReplacement(
+      context,
+      MaterialPageRoute<void>(builder: (context) => const LoginView()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,32 +97,36 @@ class RegisterView extends StatelessWidget {
                   const SizedBox(height: 60),
                   const MainTitle(title: 'Sign Up'),
                   const SizedBox(height: 46),
-                  const BasicFormField(
+                  BasicFormField(
                     labelText: 'Full Name',
                     iconPath: MyImages.person,
+                    controller: _fullNameController,
                   ),
                   const SizedBox(height: 40),
-                  const BasicFormField(
+                  BasicFormField(
                     labelText: 'Email',
                     iconPath: MyImages.mail,
+                    controller: _emailController,
                   ),
                   const SizedBox(height: 40),
-                  const BasicFormField(
+                  BasicFormField(
                     labelText: 'Password',
                     iconPath: MyImages.locker,
                     obscureText: true,
+                    controller: _passwordController,
                   ),
                   const SizedBox(height: 40),
-                  const BasicFormField(
+                  BasicFormField(
                     labelText: 'Confirm Password',
                     iconPath: MyImages.locker,
                     obscureText: true,
+                    controller: _confirmPasswordController,
                   ),
                   const SizedBox(height: 80),
                   Center(
                     child: MainButton(
                       buttonText: 'Sign Up',
-                      onPressed: () {},
+                      onPressed: _register,
                     ),
                   ),
                   const SizedBox(height: 20),
