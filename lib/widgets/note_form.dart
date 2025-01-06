@@ -11,16 +11,16 @@ class NoteFormWidget extends StatelessWidget {
   final ValueChanged<String> onChangedDescription;
 
   const NoteFormWidget({
-    Key? key,
-    this.isImportant = false,
-    this.number = 0,
-    this.title = '',
-    this.description = '',
     required this.onChangedImportant,
     required this.onChangedNumber,
     required this.onChangedTitle,
     required this.onChangedDescription,
-  }) : super(key: key);
+    super.key,
+    this.isImportant = false,
+    this.number = 0,
+    this.title = '',
+    this.description = '',
+  });
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
@@ -38,12 +38,11 @@ class NoteFormWidget extends StatelessWidget {
                   Expanded(
                     child: Slider(
                       value: (number ?? 0).toDouble(),
-                      min: 0,
                       max: 5,
                       divisions: 5,
                       onChanged: (number) => onChangedNumber(number.toInt()),
                     ),
-                  )
+                  ),
                 ],
               ),
               buildTitle(),
@@ -56,7 +55,6 @@ class NoteFormWidget extends StatelessWidget {
       );
 
   Widget buildTitle() => TextFormField(
-        maxLines: 1,
         initialValue: title,
         style: const TextStyle(
           color: Colors.white70,

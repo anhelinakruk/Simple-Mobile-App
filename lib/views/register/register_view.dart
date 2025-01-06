@@ -139,8 +139,12 @@ class RegisterViewState extends State<RegisterView> {
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
                                     const LoginView(),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
+                            transitionsBuilder: (
+                              context,
+                              animation,
+                              secondaryAnimation,
+                              child,
+                            ) {
                               const begin = Offset(1, 0);
                               const end = Offset.zero;
                               const curve = Curves.ease;

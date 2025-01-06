@@ -56,7 +56,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     // Text(
-                    //   // DateFormat.yMMMd().format(note.createdTime),
+                    //   // DateFormat.yMMMd().format(note.time),
                     //   style: const TextStyle(color: Colors.white38),
                     // ),
                     const SizedBox(height: 8),

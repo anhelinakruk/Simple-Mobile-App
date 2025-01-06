@@ -7,7 +7,7 @@ class NoteFields {
     number,
     title,
     description,
-    createdTime
+    time,
   ];
 
   static const String id = '_id';
@@ -15,7 +15,7 @@ class NoteFields {
   static const String number = 'number';
   static const String title = 'title';
   static const String description = 'description';
-  static const String createdTime = 'createdTime';
+  static const String time = 'time';
 }
 
 class Note {
@@ -58,7 +58,7 @@ class Note {
         number: json[NoteFields.number]! as int,
         title: json[NoteFields.title]! as String,
         description: json[NoteFields.description]! as String,
-        createdTime: DateTime.parse(json[NoteFields.createdTime]! as String),
+        createdTime: DateTime.parse(json[NoteFields.time]! as String),
       );
 
   Map<String, Object?> toJson() => {
@@ -67,6 +67,6 @@ class Note {
         NoteFields.number: number,
         NoteFields.title: title,
         NoteFields.description: description,
-        NoteFields.createdTime: createdTime.toIso8601String(),
+        NoteFields.time: createdTime.toIso8601String(),
       };
 }

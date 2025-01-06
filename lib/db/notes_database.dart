@@ -19,7 +19,7 @@ class NotesDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return openDatabase(path, version: 1, onCreate: _createDB);
   }
 
   Future<void> _createDB(Database db, int version) async {
@@ -35,7 +35,7 @@ CREATE TABLE $tableNotes (
   ${NoteFields.number} $intType,
   ${NoteFields.title} $textType,
   ${NoteFields.description} $textType,
-  ${NoteFields.createdTime} $textType
+  ${NoteFields.time} $textType
   )
 )
 ''');
@@ -66,7 +66,7 @@ CREATE TABLE $tableNotes (
 
   Future<List<Note>> readAllNotes() async {
     final db = await instance.database;
-    const orderBy = '${NoteFields.createdTime} ASC';
+    const orderBy = '${NoteFields.time} ASC';
     final result = await db.query(tableNotes, orderBy: orderBy);
 
     return result.map(Note.fromJson).toList();

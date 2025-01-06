@@ -33,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
     final savedPassword = prefs.getString('password') ?? '';
 
     if (email == savedEmail && password == savedPassword) {
-      await prefs.setBool('isLogged', true);
+      await prefs.setBool('isLoggedIn', true);
 
       await Navigator.pushReplacement(
         context,
