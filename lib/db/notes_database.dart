@@ -37,7 +37,6 @@ CREATE TABLE $tableNotes (
   ${NoteFields.description} $textType,
   ${NoteFields.time} $textType
   )
-)
 ''');
   }
 

@@ -25,17 +25,17 @@ class _NotesPageState extends State<NotesPage> {
     refreshNotes();
   }
 
-  // @override
-  // void dispose() {
-  //   NotesDatabase.instance.close();
-  //   super.dispose();
-  // }
-
   Future<void> refreshNotes() async {
     setState(() => isLoading = true);
     notes = await NotesDatabase.instance.readAllNotes();
     setState(() => isLoading = false);
   }
+
+  // @override
+  // void dispose() {
+  //   NotesDatabase.instance.close();
+  //   super.dispose();
+  // }
 
   Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
@@ -72,10 +72,9 @@ class _NotesPageState extends State<NotesPage> {
           child: isLoading
               ? const CircularProgressIndicator()
               : notes.isEmpty
-                  ? Text(
+                  ? const Text(
                       'No Notes',
-                      style:
-                          TextStyle(color: MyColors.blackColor, fontSize: 24),
+                      style: TextStyle(color: Colors.black, fontSize: 24),
                     )
                   : buildNotes(),
         ),

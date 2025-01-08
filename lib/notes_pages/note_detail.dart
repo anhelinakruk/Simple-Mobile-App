@@ -1,6 +1,7 @@
 import 'package:dsw53518/db/notes_database.dart';
 import 'package:dsw53518/model/note.dart';
 import 'package:dsw53518/notes_pages/edit_note.dart';
+import 'package:dsw53518/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class NoteDetailPage extends StatefulWidget {
@@ -36,8 +37,27 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          actions: [editButton(), deleteButton()],
+          backgroundColor: MyColors.lightPurpleColor,
+          actions: [
+            // Function to edit the note
+            IconButton(
+              icon: Icon(Icons.edit_outlined, color: MyColors.whiteColor),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => AddEditNotePage(note: note),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Delete the note using the delete button
+            deleteButton(),
+          ],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: MyColors.whiteColor),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -49,7 +69,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     Text(
                       note.title,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -62,8 +82,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     const SizedBox(height: 8),
                     Text(
                       note.description,
-                      style:
-                          const TextStyle(color: Colors.white70, fontSize: 18),
+                      style: const TextStyle(color: Colors.black, fontSize: 18),
                     ),
                   ],
                 ),
@@ -86,7 +105,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       );
 
   Widget deleteButton() => IconButton(
-        icon: const Icon(Icons.delete),
+        icon: const Icon(Icons.delete, color: Colors.white),
         onPressed: () async {
           await NotesDatabase.instance.delete(widget.noteId);
 

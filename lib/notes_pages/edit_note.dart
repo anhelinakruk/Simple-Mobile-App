@@ -1,5 +1,6 @@
 import 'package:dsw53518/db/notes_database.dart';
 import 'package:dsw53518/model/note.dart';
+import 'package:dsw53518/utils/my_colors.dart';
 import 'package:dsw53518/widgets/note_form.dart';
 import 'package:flutter/material.dart';
 
@@ -34,8 +35,14 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: MyColors.lightPurpleColor,
           actions: [buildButton()],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: MyColors.whiteColor),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: Form(
           key: _formKey,
@@ -62,10 +69,11 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: isFormValid ? null : Colors.grey.shade700,
+          backgroundColor:
+              isFormValid ? MyColors.darkPurpleColor : Colors.grey.shade700,
         ),
         onPressed: addOrUpdateNote,
-        child: const Text('Save'),
+        child: const Text('Save', style: TextStyle(color: Colors.white)),
       ),
     );
   }

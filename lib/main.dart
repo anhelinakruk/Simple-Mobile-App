@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Notes App',
+      title: 'Notes Ap',
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: isLoggedIn ? const HomeView() : const LoginView(),

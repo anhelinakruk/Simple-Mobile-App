@@ -30,6 +30,7 @@ class BasicFormField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       controller: controller,
+      style: TextStyle(color: MyColors.darkPurpleColor),
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_inputBorderRadius),
@@ -53,7 +54,7 @@ class BasicFormField extends StatelessWidget {
           ),
         ),
         labelText: labelText,
-        labelStyle: const TextStyle(color: MyColors.transparentBlack),
+        labelStyle: TextStyle(color: MyColors.darkPurpleColor),
         prefixIcon: Padding(
           padding: _iconPadding,
           child: Image.asset(iconPath),

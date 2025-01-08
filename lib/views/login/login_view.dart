@@ -27,6 +27,15 @@ class _LoginViewState extends State<LoginView> {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
+    if (password.length < 3) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Password must be at least 3 characters'),
+        ),
+      );
+      return;
+    }
+
     final prefs = await SharedPreferences.getInstance();
 
     final savedEmail = prefs.getString('email') ?? '';
