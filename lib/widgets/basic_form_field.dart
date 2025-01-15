@@ -59,6 +59,15 @@ class BasicFormField extends StatelessWidget {
           padding: _iconPadding,
           child: Image.asset(iconPath),
         ),
+        suffixIcon: obscureText
+            ? Padding(
+                padding: _iconPadding,
+                child: Icon(
+                  obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: MyColors.lightPurpleColor,
+                ),
+              )
+            : null,
       ),
     );
   }
